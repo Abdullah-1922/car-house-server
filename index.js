@@ -29,6 +29,7 @@ async function run() {
     await client.connect();
     const brandCollection=client.db("brandDB").collection("brands");
     const productCollection=client.db("brandDB").collection("products");
+    const cartCollection=client.db("brandDB").collection("carts");
 
     app.post('/brands',async(req,res)=>{
       const brands =req.body
@@ -73,6 +74,21 @@ async function run() {
       res.send(result);
       console.log(result);
     })
+    app.post('/carts',async(req,res)=>{
+
+      const cart = req.body;
+      console.log(cart);
+      const result = await cartCollection.insertOne(cart);
+      res.send(result);
+      console.log(result);
+    })
+    app.get('/allCarts',async(req,res)=>{
+      const result = await cartCollection.find().toArray();
+      res.send(result);
+      console.log(result);
+    })
+    
+    
     
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
