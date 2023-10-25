@@ -87,7 +87,15 @@ async function run() {
       res.send(result);
       console.log(result);
     })
+    app.delete('/allCarts/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await cartCollection.deleteOne(query);
+      res.send(result);
+      console.log(result);
+    })
     
+
     
     
     await client.db("admin").command({ ping: 1 });
